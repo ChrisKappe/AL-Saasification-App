@@ -1,10 +1,5 @@
 codeunit 50105 "AIR UpdateFlights"
 {
-    trigger OnRun()
-    begin
-
-    end;
-
     procedure UpdateFlights()
     var
     begin
