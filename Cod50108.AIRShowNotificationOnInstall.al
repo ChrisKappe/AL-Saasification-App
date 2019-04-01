@@ -23,7 +23,7 @@ codeunit 50108 "AIR ShowNotificationOnInstall"
             Id := GetNotificationGUID;
             Message := 'Congratulations! You have new Airport app installed. Do you want to setup it now?';
             Scope := NotificationScope::LocalScope;
-            AddAction('Yes', CODEUNIT::"AIR Notifications Actions", 'RunSetup');
+            AddAction('Yes', CODEUNIT::"AIR Notifications Actions", 'RunSetupWizard');
             AddAction('Do not show again', Codeunit::"AIR Notifications Actions", 'HideNotification');
             Send;
         END;

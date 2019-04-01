@@ -1,8 +1,8 @@
 codeunit 50106 "AIR Notifications Actions"
 {
-    procedure RunSetup(var MyNotification: Notification);
+    procedure RunSetupWizard(var MyNotification: Notification);
     var
-        Setup: page "AIR Setup";
+        Setup: page "AIR Setup Airport App Wizard";
     begin
         Setup.Run();
     end;
