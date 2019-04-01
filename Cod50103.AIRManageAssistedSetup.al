@@ -7,13 +7,13 @@ codeunit 50103 "AIR ManageAssistedSetup"
         MyAppSetup: Record "AIR Airport Setup";
     begin
 
-        TempAggregatedAssistedSetup.AddExtensionAssistedSetup(50102, 'Set up Airplane App', true, MyAppSetup.RecordId(), GetStatus(), '');
+        TempAggregatedAssistedSetup.AddExtensionAssistedSetup(50104, 'Set up Airplane App Wizard', true, MyAppSetup.RecordId(), GetStatus(), '');
     end;
 
     [EventSubscriber(ObjectType::Table, Database::"Aggregated Assisted Setup", 'OnUpdateAssistedSetupStatus', '', false, false)]
     local procedure UpdateLittleAppAssistedSetupStatus(var TempAggregatedAssistedSetup: Record "Aggregated Assisted Setup")
     begin
-        TempAggregatedAssistedSetup.SetStatus(TempAggregatedAssistedSetup, Page::"AIR Setup", GetStatus());
+        TempAggregatedAssistedSetup.SetStatus(TempAggregatedAssistedSetup, Page::"AIR Setup Airport App Wizard", GetStatus());
     end;
 
     local procedure GetStatus(): Integer
