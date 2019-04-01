@@ -138,4 +138,18 @@ table 50100 "AIR Flight"
     begin
         EXIT(GetFlightStatus.GetStatus(Rec));
     end;
+
+    procedure GetPlannedArrivalsForToday(): Integer
+    var
+        GetPlannedArrivalsForToday: Codeunit "AIR GetPlannedArrivalsForToday";
+    begin
+        exit(GetPlannedArrivalsForToday.GetPlannedArrivalsForToday())
+    end;
+
+    procedure DrillDownInPlannedArrivalsForToday()
+    var
+        GetPlannedArrivalsForToday: Codeunit "AIR GetPlannedArrivalsForToday";
+    begin
+        GetPlannedArrivalsForToday.DrillDownInPlannedArrivalsForToday();
+    end;
 }
