@@ -78,7 +78,7 @@ page 50101 "AIR Flight List"
             action("GetFlights")
             {
                 CaptionML = ENU = 'Update flights';
-                ToolTipML = ENU = 'Update flights from Flightaware service';
+                ToolTipML = ENU = 'Update flights from flightaware.com service';
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
