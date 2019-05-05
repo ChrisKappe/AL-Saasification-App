@@ -9,13 +9,28 @@ codeunit 50105 "AIR UpdateFlights"
     local procedure DoUpdateFlights()
     var
     begin
+        DeleteCurrentData();
         UpdateArrivals();
+        UpdateEnroutes();
+    end;
+
+    local procedure DeleteCurrentData()
+    var
+        Flight: Record "AIR Flight";
+    begin
+        Flight.DeleteAll();
     end;
 
     local procedure UpdateArrivals()
     begin
         GetArrivals(GetDefaultAirport());
     end;
+
+    local procedure UpdateEnroutes()
+    begin
+        GetEnroutes(GetDefaultAirport());
+    end;
+
 
     local procedure GetDefaultAirport(): Code[20]
     var
@@ -29,6 +44,24 @@ codeunit 50105 "AIR UpdateFlights"
     begin
         GetArrivalsFromFlightAwareInXML3Format(ToAirport);
     end;
+
+    local procedure GetEnroutes(ToAirport: Code[20]);
+    var
+    begin
+        GetEnroutesFromFlightAwareInXML3Format(ToAirport);
+    end;
+
+
+    local procedure GetEnroutesFromFlightAwareInXML3Format(ToAirport: Code[20]);
+    var
+        Arguments: Record "AIR WebService Argument";
+    begin
+        InitArguments(Arguments, STRSUBSTNO('AirportBoards?airport_code=%1&type=enroute&howMany=100', ToAirport));//change request here
+        IF not CallWebService(Arguments) then
+            EXIT;
+        SaveResultInAirportFlightTable(Arguments);
+    end;
+
 
     local procedure GetArrivalsFromFlightAwareInXML3Format(ToAirport: Code[20]);
     var
@@ -90,7 +123,7 @@ codeunit 50105 "AIR UpdateFlights"
         //Message(ResponseInTextFormat);
 
         HandleResponseForJsonArrayFormat(ResponseInTextFormat);
-        Flight.DeleteAll;
+        //Flight.DeleteAll;
         If not JsonArray.ReadFrom(ResponseInTextFormat) then
             error('Invalid response, expected an JSON array as root object');
 
