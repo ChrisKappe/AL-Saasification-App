@@ -5,13 +5,14 @@
             "type": "al",
             "request": "launch",
             "name": "Your own server",
-            "server": "http://dirasia-saasif",
+            "server": "http://dirus-saasif",
             "serverInstance": "NAV",
             "authentication": "UserPassword",
             "tenant": "default",
-            "startupObjectId": 22,
-            "startupObjectType": "Page",
-            "breakOnError": true
+            //"startupObjectId": 22,
+            //"startupObjectType": "Page",
+            "breakOnError": true,
+            "schemaUpdateMode": "Recreate"
         }
     ]
 }

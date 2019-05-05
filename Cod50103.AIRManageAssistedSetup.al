@@ -22,7 +22,7 @@ codeunit 50103 "AIR ManageAssistedSetup"
         MyAppSetup: Record "AIR Airport Setup";
         TempAggregatedAssistedSetup: Record "Aggregated Assisted Setup";
     begin
-        MyAppSetup.Get();
+        MyAppSetup.InsertIfNotExists();
         Status := MyAppSetup."My Airport" <> '';
 
         Case Status of
