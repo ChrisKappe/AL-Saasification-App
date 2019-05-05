@@ -21,6 +21,15 @@ pageextension 50102 "AIR Airport Headline to BM RC" extends "Headline RC Busines
                     end;
 
                 }
+                field("AIR HowManyFlightsWillBeDelayedTodayHeadlineText"; "HowManyFlightsWillBeDelayedTodayHeadlineText")
+                {
+                    ApplicationArea = Basic, Suite;
+                    trigger OnDrillDown();
+                    var
+                    begin
+                        OnDrillDownHowManyFlightsWillBeDelayedToday();
+                    end;
+                }
             }
         }
     }
@@ -29,12 +38,16 @@ pageextension 50102 "AIR Airport Headline to BM RC" extends "Headline RC Busines
         [InDataSet]
         AirportHeadlineVisible: Boolean;
         HowManyFlightsWillArriveTodayHeadlineText: Text;
+        HowManyFlightsWillBeDelayedTodayHeadlineText: Text;
+
 
     trigger OnOpenPage()
     begin
         HandleVisibility();
 
         HandleHowManyFlightsWillArriveTodayHeadline();
+        HandleHowManyFlightsWillBeDelayedTodayHeadline();
+
 
         OnSetVisibilityOfAirportApp(AirportHeadlineVisible);
     end;
@@ -57,6 +70,19 @@ pageextension 50102 "AIR Airport Headline to BM RC" extends "Headline RC Busines
         HeadlineManagement.GetHeadlineText(QualifierText, PayloadText, HowManyFlightsWillArriveTodayHeadlineText);
     end;
 
+    local procedure HandleHowManyFlightsWillBeDelayedTodayHeadline();
+    var
+        HeadlineManagement: Codeunit "Headline Management";
+        PayloadText: Text;
+        QualifierText: Text;
+        Flight: Record "AIR Flight";
+    begin
+        PayloadText := 'Number of predicted delayes is ' + HeadlineManagement.Emphasize(FORMAT(Flight.GetNumberOfPredictedDelaysForToday));
+        QualifierText := 'Predicted delays';
+        HeadlineManagement.GetHeadlineText(QualifierText, PayloadText, HowManyFlightsWillBeDelayedTodayHeadlineText);
+
+    end;
+
     local procedure OnDrillDownHowManyFlightsWillArriveToday();
     var
         Flight: Record "AIR Flight";
@@ -64,6 +90,12 @@ pageextension 50102 "AIR Airport Headline to BM RC" extends "Headline RC Busines
         Flight.DrillDownInPlannedArrivalsForToday();
     end;
 
+    local procedure OnDrillDownHowManyFlightsWillBeDelayedToday();
+    var
+        Flight: Record "AIR Flight";
+    begin
+        Flight.DrillDownInPredictedDelaysForToday();
+    end;
 
     [IntegrationEvent(false, false)]
     local procedure OnSetVisibilityOfAirportApp(var AirportHeadlineVisible: Boolean)

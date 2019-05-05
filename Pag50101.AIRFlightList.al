@@ -35,6 +35,19 @@ page 50101 "AIR Flight List"
                     ApplicationArea = All;
                 }
 
+                field("Prediction Arrival Delay"; "Prediction Arrival Delay")
+                {
+                    StyleExpr = StyleTxt;
+                    ApplicationArea = All;
+
+                }
+                field("Probability %"; "Probability %")
+                {
+                    BlankZero = true;
+                    ApplicationArea = All;
+
+                }
+
                 field("Actual Departure Date"; "Actual Departure Date")
                 {
                     ApplicationArea = All;
@@ -95,10 +108,38 @@ page 50101 "AIR Flight List"
 
                 end;
             }
+            action("PredictDelays")
+            {
+                CaptionML = ENU = 'Predict Delays';
+                ToolTipML = ENU = 'Predict Delays using Machine Learning Service';
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                PromotedOnly = true;
+                ApplicationArea = All;
+                Image = Forecast;
+                trigger OnAction();
+                var
+                    Flight: Record "AIR Flight";
+                begin
+                    Flight.PredictDelays();
+                    CurrPage.Update;
+                    if FindFirst then;
+
+                end;
+
+
+            }
         }
     }
 
+    var
+        StyleTxt: Text;
 
+    trigger OnAfterGetRecord()
+    begin
+        StyleTxt := SetStyle;
+    end;
 
 
 }

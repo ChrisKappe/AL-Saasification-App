@@ -114,6 +114,15 @@ table 50100 "AIR Flight"
 
         }
 
+        field(40; "Prediction Arrival Delay"; Option)
+        {
+            Caption = 'Predicted Delay on arrival';
+            OptionMembers = " ","Delay";
+        }
+        field(41; "Probability %"; Decimal)
+        {
+
+        }
 
     }
 
@@ -151,5 +160,46 @@ table 50100 "AIR Flight"
         GetPlannedArrivalsForToday: Codeunit "AIR GetPlannedArrivalsForToday";
     begin
         GetPlannedArrivalsForToday.DrillDownInPlannedArrivalsForToday();
+    end;
+
+    procedure PredictDelays()
+    var
+        PredictDelays: Codeunit "AIR PredictDelays";
+    begin
+        PredictDelays.PredictDelays();
+    end;
+
+    procedure CalcDepartureDelay(): Integer
+    var
+        ActualTime: Time;
+        PlannedTime: Time;
+    begin
+        Evaluate(ActualTime, "Actual Departure Time");
+        Evaluate(PlannedTime, "Planned Departure Time");
+        Exit(ActualTime - PlannedTime);
+    end;
+
+    procedure GetNumberOfPredictedDelaysForToday(): Integer
+    var
+        GetNumberOfPredictedDelaysForToday: Codeunit "AIR GetCountOfPredictedDelays";
+    begin
+        exit(GetNumberOfPredictedDelaysForToday.GetNumberOfPredictedDelaysForToday());
+    end;
+
+    procedure DrillDownInPredictedDelaysForToday()
+    var
+        GetPlannedArrivalsForToday: Codeunit "AIR GetCountOfPredictedDelays";
+    begin
+        GetPlannedArrivalsForToday.DrillDownInPredictedDelaysForToday();
+    end;
+
+
+    procedure SetStyle(): Text
+    var
+    begin
+        If "Prediction Arrival Delay" = "Prediction Arrival Delay"::Delay then
+            exit('Attention');
+        exit('')
+
     end;
 }
